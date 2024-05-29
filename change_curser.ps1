@@ -360,14 +360,28 @@ function applyCurser {
 	
 	#apply scheme
 	New-ItemProperty -Path "Registry::$cursersKey" -Name "Scheme Source" -PropertyType "DWORD" -Value "1" -Force | Out-Null
+	New-ItemProperty -Path "Registry::$cursersKey" -Name "(Default)" -Value "$schemeName" -Force | Out-Null
 	
-	Write-Host -ForegroundColor "Green" "Scheme created!"
-	Write-Host -ForegroundColor "Yellow" "You have to select the theme manually and press apply!"
-	
-	#We have to tell windows to reload the curser, reloading the cursor settings from PowerShell can be a bit tricky. So we are the mouse Properties...
-	openCurserSettings
+	Update-UserPreferencesMask
 	
 	scriptStart
+}
+
+function Update-UserPreferencesMask {
+$Signature = @"
+[DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
+public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, uint pvParam, uint fWinIni);
+
+const int SPI_SETCURSORS = 0x0057;
+const int SPIF_UPDATEINIFILE = 0x01;
+const int SPIF_SENDCHANGE = 0x02;
+
+public static void UpdateUserPreferencesMask() {
+    SystemParametersInfo(SPI_SETCURSORS, 0, 0, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
+}
+"@
+    Add-Type -MemberDefinition $Signature -Name UserPreferencesMaskSPI -Namespace User32
+    [User32.UserPreferencesMaskSPI]::UpdateUserPreferencesMask()
 }
 
 scriptStart
