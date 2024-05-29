@@ -26,7 +26,7 @@ function scriptStart {
 		'e' {exit}
 		"exit" {exit}
 		4 {exit}
-		Default { unvalidInput }
+		Default { Write-Host -ForegroundColor "DarkRed" "unvalid input"; scriptStart }
    }
 }
 
@@ -342,8 +342,6 @@ function applyCurser {
 	
 	scriptStart
 }
-
-function unvalidInput { Write-Host -ForegroundColor "DarkRed" "unvalid input" }
 
 scriptStart
 exit
