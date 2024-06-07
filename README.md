@@ -4,5 +4,5 @@ This is a small script which allows you to easily change the cursor appearance. 
 ## How to use
 1. open powershell as an administrator
 2. you may need to enable scripts: `Set-ExecutionPolicy Unrestricted -Force`
-3. direct to the directory of the script with `cd PATH`
+3. direct to the directory of the script with `cd PATH` with path being the location where you saved the script.
 4. run the script simply by typing it's name into the console.
