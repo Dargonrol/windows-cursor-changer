@@ -3,14 +3,15 @@ $cursorsKey = "HKEY_CURRENT_USER\Control Panel\Cursors"
 
 function scriptStart {
 	Write-Host "
-    __  __ __  ____    _____   ___  ____          __  __ __   ____  ____    ____    ___  ____  
-   /  ]|  |  ||    \  / ___/  /  _]|    \        /  ]|  |  | /    ||    \  /    |  /  _]|    \ 
-  /  / |  |  ||  D  )(   \_  /  [_ |  D  )      /  / |  |  ||  o  ||  _  ||   __| /  [_ |  D  )
- /  /  |  |  ||    /  \__  ||    _]|    /      /  /  |  _  ||     ||  |  ||  |  ||    _]|    / 
-/   \_ |  :  ||    \  /  \ ||   [_ |    \     /   \_ |  |  ||  _  ||  |  ||  |_ ||   [_ |    \ 
-\     ||     ||  .  \ \    ||     ||  .  \    \     ||  |  ||  |  ||  |  ||     ||     ||  .  \
- \____| \__,_||__|\_|  \___||_____||__|\_|     \____||__|__||__|__||__|__||___,_||_____||__|\_|
-                                                                                               
+   _____                             _____ _                                 
+  / ____|                           / ____| |                                
+ | |    _   _ _ __ ___  ___  _ __  | |    | |__   __ _ _ __   __ _  ___ _ __ 
+ | |   | | | | '__/ __|/ _ \| '__| | |    | '_ \ / _` | '_ \ / _` |/ _ \ '__|
+ | |___| |_| | |  \__ \ (_) | |    | |____| | | | (_| | | | | (_| |  __/ |   
+  \_____\__,_|_|  |___/\___/|_|     \_____|_| |_|\__,_|_| |_|\__, |\___|_|   
+                                                              __/ |          
+                                                             |___/           
+              
 "
 	Write-Host "What do you want to do?"
 	write-Host "(c)reate new scheme (1) | (l)ist schemes (2) | (d)elete schemes (3) | (o)pen cursor settings (4) | (e)xit (5)"
@@ -352,7 +353,7 @@ function applycursor {
 		New-ItemProperty -Path "Registry::$schemesKey" -Name "$schemeName" -Value "$regValue" | Out-Null
 	}
 	
-	#apply scheme
+	# apply scheme
 	New-ItemProperty -Path "Registry::$cursorsKey" -Name "Scheme Source" -PropertyType "DWORD" -Value "1" -Force | Out-Null
 	New-ItemProperty -Path "Registry::$cursorsKey" -Name "(Default)" -Value "$schemeName" -Force | Out-Null
 	
